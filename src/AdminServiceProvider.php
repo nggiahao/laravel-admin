@@ -50,13 +50,13 @@ class AdminServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/admin/crud.php', 'admin.crud');
 
         app()->config['auth.providers'] = app()->config['auth.providers'] +
-            app()->config('admin.base.auth.providers');
+            app()->config['admin.base.auth.providers'];
 
         app()->config['auth.passwords'] = app()->config['auth.passwords'] +
-            app()->config('admin.base.auth.passwords');
+            app()->config['admin.base.auth.passwords'];
 
         app()->config['auth.guards'] = app()->config['auth.guards'] +
-            app()->config('admin.base.auth.passwords');
+            app()->config['admin.base.auth.passwords'];
     }
 
     /**

@@ -1,0 +1,21 @@
+:root {
+  --color-primary: #7366ff;
+  --color-secondary: #f73164;
+
+  --color-primary-darker: #2B7CCC;
+  --color-primary-lighter: #72B9FF;
+
+  --color-secondary-darker: #bb0735;
+  --color-secondary-lighter: #fb93ae;
+
+  --color-info : #07B1F9;
+  --color-success : #5FD62C;
+  --color-warning : #E8E00B;
+  --color-danger : #FF4332;
+  --color-error : #ff1500;
+
+  --color-default : #494949;
+  --color-main-background: #f5f5f5;
+
+  --gradient-primary: linear-gradient(90deg,var(--color-primary) 0%, #a26cf8 100%)
+}

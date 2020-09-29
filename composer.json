@@ -1,0 +1,53 @@
+{
+    "name": "tessa/laravel-admin",
+    "description": "Quickly build an admin interfaces using Laravel 7+, AlpineJS and Tailwindcss.",
+    "keywords": [
+        "tessa",
+        "laravel-admin"
+    ],
+    "homepage": "https://github.com/nggiahao/tessa-admin",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Nguyen Gia Hao",
+            "email": "giahao9899@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "laravel/framework": "~6.0|~7.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^8.0",
+        "laravel/ui": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tessa\\Admin\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tessa\\Admin\\Tests\\": "tests"
+        },
+        "files": ["src/helpers.php"]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tessa\\Admin\\AdminServiceProvider"
+            ]
+        }
+    }
+}

@@ -1,0 +1,8 @@
+.idea/
+node_modules/
+vendor/
+build/
+.phpunit.result.cache
+composer.lock
+npm-debug.log
+yarn-error.log

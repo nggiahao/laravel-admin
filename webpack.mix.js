@@ -20,5 +20,5 @@ mix
     .js('resources/assets/js/app.js', 'public/packages/tessa/js/app.min.js')
     .sass('resources/assets/scss/app.scss', 'public/packages/tessa/css/app.min.css')
     /** Mix themes */
-    .sass('resources/assets/scss/themes/light.scss', 'public/packages/tessa/css/themes/light.min.css')
-    .sass('resources/assets/scss/themes/dark.scss', 'public/packages/tessa/css/themes/dark.min.css')
+    .sass('resources/assets/scss/color/blue-light.scss', 'public/packages/tessa/css/color/blue-light.min.css')
+    .sass('resources/assets/scss/color/blue-dark.scss', 'public/packages/tessa/css/color/blue-dark.min.css')

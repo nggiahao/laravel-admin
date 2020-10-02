@@ -12,9 +12,7 @@ module.exports = {
                 info: 'var(--color-info)',
                 success: 'var(--color-success)',
                 danger: 'var(--color-danger)',
-                error: 'var(--color-error)',
-                default: 'var(--color-default)',
-                "main-background": 'var(--color-main-background)',
+
                 "primary-darker": 'var(--color-primary-darker)',
                 "primary-lighter": 'var(--color-primary-lighter)',
                 "secondary-darker": 'var(--color-secondary-darker)',
@@ -27,9 +25,22 @@ module.exports = {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
-            backgroundImage: {
-              'gradient-primary': 'var(--gradient-primary)'
+            backgroundColor: {
+                main: 'var(--bg-default)',
+                primary: 'var(--color-primary)',
+                secondary: 'var(--color-secondary)',
+                warning: 'var(--color-secondary)',
+                info: 'var(--color-info)',
+                success: 'var(--color-success)',
+                danger: 'var(--color-danger)',
             },
+            backgroundImage: {
+                'gradient-primary': 'var(--gradient-primary)'
+            },
+            background: {
+                'main': 'var(--bg-default)'
+            }
+            ,
             borderRadius: {
                 'large': '10px',
             }

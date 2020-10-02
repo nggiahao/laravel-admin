@@ -1,6 +1,6 @@
 {
     "/public/packages/tessa/js/app.min.js": "/public/packages/tessa/js/app.min.js",
     "/public/packages/tessa/css/app.min.css": "/public/packages/tessa/css/app.min.css",
-    "/public/packages/tessa/css/themes/light.min.css": "/public/packages/tessa/css/themes/light.min.css",
-    "/public/packages/tessa/css/themes/dark.min.css": "/public/packages/tessa/css/themes/dark.min.css"
+    "/public/packages/tessa/css/color/blue-light.min.css": "/public/packages/tessa/css/color/blue-light.min.css",
+    "/public/packages/tessa/css/color/blue-dark.min.css": "/public/packages/tessa/css/color/blue-dark.min.css"
 }

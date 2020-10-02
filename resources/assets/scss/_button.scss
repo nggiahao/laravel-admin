@@ -1,0 +1,36 @@
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: var(--body-color);
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  padding: 0.375rem 1.75rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out;
+}
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    color: var(--body-color);
+    background-color: $value;
+    border-color: $value;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    color: $value;
+    border-color: $value;
+
+    &:hover {
+      color: white;
+      background-color: $value;
+    }
+  }
+}

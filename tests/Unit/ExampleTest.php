@@ -11,8 +11,12 @@ class ExampleTest extends TestCase
     /**
      * @environment-setup useMySqlConnection
      */
-    public function testTrueIsTrue()
+    public function test_true_is_true()
     {
         $this->assertTrue(true);
+    }
+
+    public function it_runs_the_migrations() {
+        $this->loadLaravelMigrations();
     }
 }

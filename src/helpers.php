@@ -36,3 +36,9 @@ if (! function_exists('admin_view')) {
         return $theme.$view;
     }
 }
+
+if (! function_exists('admin_auth')) {
+    function admin_auth() {
+        return auth('admin');
+    }
+}

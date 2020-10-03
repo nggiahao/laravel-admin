@@ -46,6 +46,9 @@ module.exports = {
             }
         },
     },
+    variants: {
+        backgroundImage: ['responsive', 'hover', 'focus']
+    },
     plugins: [
         require('@tailwindcss/custom-forms'),
     ],

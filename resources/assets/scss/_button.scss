@@ -17,7 +17,7 @@
 
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
-    color: var(--body-color);
+    color: white;
     background-color: $value;
     border-color: $value;
   }

@@ -31,7 +31,7 @@ return [
         //'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css'
 
         //Theme
-        '/packages/tessa/css/themes/light.min.css'
+        '/packages/tessa/css/color/blue-light.min.css'
     ],
 
     // JS files that are loaded in all pages, using Laravel's asset() helper

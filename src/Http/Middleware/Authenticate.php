@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
-
-    private function checkIfUserIsAdmin(Authenticatable $user)
-    {
-        // return ($user->is_admin == 1);
-        return true;
-    }
     /**
      * Handle an incoming request.
      *
@@ -29,10 +23,6 @@ class Authenticate
             return $this->unauthenticated($request);
         }
 
-        if (! $this->checkIfUserIsAdmin(Auth::guard('admin')->user())) {
-            return $this->unauthenticated($request);
-        }
-
         return $next($request);
     }
 
@@ -41,7 +31,7 @@ class Authenticate
         if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
         } else {
-            return redirect(url('/admin/login'));
+            return redirect(admin_url('/login'));
         }
     }
 }

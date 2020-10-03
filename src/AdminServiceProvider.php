@@ -2,7 +2,9 @@
 
 namespace Tessa\Admin;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Tessa\Admin\Http\Middleware\Authenticate;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -56,7 +58,7 @@ class AdminServiceProvider extends ServiceProvider
             app()->config['admin.base.auth.passwords'];
 
         app()->config['auth.guards'] = app()->config['auth.guards'] +
-            app()->config['admin.base.auth.passwords'];
+            app()->config['admin.base.auth.guards'];
     }
 
     /**
@@ -64,7 +66,8 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function pushMiddleware()
     {
-
+        $router = $this->app->make(Router::class);
+        $router->pushMiddlewareToGroup('auth.admin', Authenticate::class);
     }
 
     /**
@@ -100,13 +103,13 @@ class AdminServiceProvider extends ServiceProvider
 
         // - first the published/overwritten views (in case they have any changes)
         if (file_exists($custom_base_folder)) {
-            $this->loadViewsFrom($custom_base_folder, config('admin.base.namespace_view'));
+            $this->loadViewsFrom($custom_base_folder, config('admin.base.namespace_view', 'tessa_admin'));
         }
         if (file_exists($custom_crud_folder)) {
             $this->loadViewsFrom($custom_crud_folder, 'crud');
         }
 
-        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/base'), config('admin.base.namespace_view'));
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/base'), config('admin.base.namespace_view', 'tessa_admin'));
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/crud'), 'crud');
     }
 

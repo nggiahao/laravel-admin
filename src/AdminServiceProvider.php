@@ -3,7 +3,9 @@
 namespace Tessa\Admin;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Tessa\Admin\Crud\Crud;
 use Tessa\Admin\Http\Middleware\Authenticate;
 
 class AdminServiceProvider extends ServiceProvider
@@ -30,6 +32,12 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('crud', function () {
+            return new Crud();
+        });
+
+        $this->addRouteMacro();
+
         $this->loadViews();
         $this->loadHelpers();
     }
@@ -78,10 +86,22 @@ class AdminServiceProvider extends ServiceProvider
     public function setupRoutes()
     {
         $route = __DIR__.$this->route_file_path;
-        $custom_route = __DIR__.$this->custom_route_file_path;
+        $custom_route = base_path('/routes/admin/custom.php');
 
         $this->loadRoutesFrom($route);
         $this->loadRoutesFrom($custom_route);
+    }
+
+    /**
+     *
+     */
+    public function addRouteMacro()
+    {
+        if (!Route::hasMacro('crud')) {
+            Route::macro('crud', function ($value) {
+
+            });
+        }
     }
 
     /**
@@ -93,7 +113,10 @@ class AdminServiceProvider extends ServiceProvider
 
         $tessa_public = [__DIR__.'/../public' => public_path()];
 
+        $tessa_route = [__DIR__.$this->custom_route_file_path => base_path('/routes/admin/custom.php')];
+
         $this->publishes($tessa_config, 'config');
+        $this->publishes($tessa_route, 'route');
         $this->publishes($tessa_public, 'public');
     }
 
@@ -116,11 +139,11 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return void
+     * @return string[]
      */
     public function provides()
     {
-        //
+        return ['crud'];
     }
 
 }

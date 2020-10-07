@@ -3,6 +3,7 @@ node_modules/
 vendor/
 build/
 .phpunit.result.cache
+_ide_helper.php
 composer.lock
 npm-debug.log
 yarn-error.log

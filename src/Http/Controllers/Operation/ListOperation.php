@@ -4,6 +4,7 @@
 namespace Tessa\Admin\Http\Controllers\Operation;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 trait ListOperation
@@ -30,4 +31,53 @@ trait ListOperation
 
         return view('crud::list', $this->data);
     }
+
+    public function search(Request $request) {
+        $this->init('list');
+
+        //TODO: apply filter
+        //
+        $total_records = $this->crud->model->count();
+        $filtered_records = $this->crud->query->count();
+
+        $start_index = $request->input('start') ?: 0;
+        if ($start_index) {
+            $this->crud->query = $this->crud->query->skip($start_index);
+        }
+        $length = $request->input('length') ?: 25;
+        if ($length) {
+            $this->crud->query = $this->crud->query->take($length);
+        }
+
+        $order = $request->input('order');
+        if ($order) {
+            $order_column = ($this->crud->columns())[$order['column']];
+            $this->crud->query = $this->crud->query->orderBy($order_column['name'], $order['direction']);
+        }
+
+        $entries = $this->crud->query->get();
+
+        $data = [];
+        foreach ($entries as $entry) {
+            $data[] = $this->getEntryView($entry);
+        }
+
+        return response()->json([
+            'total_records' => $total_records,
+            'filtered_records' => $filtered_records,
+            'data' => $data
+        ]);
+    }
+
+    public function getEntryView($entry) {
+        $row = [];
+
+        foreach ($this->crud->columns() as $column) {
+            $column_name = $column['name'];
+            $row[] = "<span>". $entry->$column_name ."</span>";
+        }
+
+        return $row;
+    }
+
 }

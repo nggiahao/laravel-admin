@@ -13,7 +13,18 @@ trait Columns
      */
     public function columns()
     {
-        return $this->getOperationSetting('columns', 'list') ?? [];
+        return $this->get('columns', []);
+    }
+
+    public function columns_name() {
+        $columns_name = [];
+
+        foreach ($this->columns() as $column) {
+            $columns_name = $column['name'];
+        }
+
+        return $columns_name;
+
     }
 
     /**
@@ -25,14 +36,14 @@ trait Columns
      */
     public function addColumn($column)
     {
-        $this->addColumnToOperationSettings($column);
+        $this->addColumnToSettings($column);
 
         return $this;
     }
 
-    public function addColumnToOperationSettings($column) {
+    public function addColumnToSettings($column) {
         $columns = array_merge($this->columns(), [$column]);
 
-        $this->setOperationSetting('columns', $columns, 'list');
+        $this->set('columns', $columns);
     }
 }

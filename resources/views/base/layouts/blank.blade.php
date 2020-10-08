@@ -18,6 +18,8 @@
                 </ol>
             </nav>
 
+            @yield('content')
+
         </main>
     </div>
 @endsection

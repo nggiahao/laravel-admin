@@ -4,22 +4,24 @@
 namespace Tessa\Admin\Crud;
 
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
 use Tessa\Admin\Crud\Traits\Columns;
+use Tessa\Admin\Crud\Traits\Fields;
+use Tessa\Admin\Crud\Traits\Query;
 use Tessa\Admin\Crud\Traits\Setting;
 
 class Crud
 {
-    use Setting, Columns;
+    use Setting, Query, Columns, Fields;
     use Macroable;
 
     /** @var Model */
     public $model;
-    /** @var Builder */
-    public $query;
+
+    /** @var string ['list', 'create', 'update', 'show', 'delete'] */
+    protected $operation;
 
     protected $route;
     public $entity_name = 'entry';
@@ -48,6 +50,24 @@ class Crud
     }
 
     /**
+     * @return mixed|string
+     */
+    public function getOperation() {
+        return $this->operation;
+    }
+
+    /**
+     * @param string $operation - Operation. Ex: list(default), create, update, delete
+     *
+     * @return Setting
+     */
+    public function setOperation(string $operation) {
+        $this->operation = $operation;
+
+        return $this;
+    }
+
+    /**
      * @param string $model
      *
      * @return Crud
@@ -60,7 +80,7 @@ class Crud
         }
 
         $this->model = new $model();
-        $this->query = $this->model->newQuery();
+        $this->setQuery($this->model->newQuery());
         $this->entry = null;
 
         return $this;

@@ -8,9 +8,6 @@ use Illuminate\Support\Arr;
 
 trait Setting
 {
-    /** @var string ['list', 'create', 'update', 'show', 'delete'] */
-    protected $operation;
-
     /** @var array  */
     public $settings = [];
 
@@ -32,58 +29,16 @@ trait Setting
     }
 
     /**
-     * @return mixed|string
-     */
-    public function getOperation() {
-        return $this->operation;
-    }
-
-    /**
-     * @param string $operation - Operation. Ex: list(default), create, update, delete
      *
      * @return Setting
      */
-    public function setOperation(string $operation) {
-        $this->operation = $operation;
-
-        return $this;
-    }
-
-    /**
-     * @param string $key
-     * @param string|null $operation
-     */
-    public function getOperationSetting(string $key, string $operation = null) {
-        $operation = $operation ?: $this->getOperation();
-
-        return $this->get("$operation.$key");
-    }
-
-    /**
-     * @param string $key
-     * @param $value
-     * @param string|null $operation
-     *
-     * @return Setting
-     */
-    public function setOperationSetting(string $key, $value, string $operation = null) {
-        $operation = $operation ?: $this->getOperation();
-        return $this->set("$operation.$key", $value);
-    }
-
-    /**
-     * @param null $operation
-     *
-     * @return Setting
-     */
-    public function loadDefaultOperationSettingsFromConfig($operation = null) {
-        $operation = $operation ?: $this->getOperation();
-
+    public function loadDefaultOperationSettingsFromConfig() {
+        $operation = $this->getOperation();
 
         $config_operation = config("admin.crud.operations.$operation", null);
         if (is_array($config_operation) && count($config_operation)) {
             foreach ($config_operation as $key => $value) {
-                $this->setOperationSetting($key, $value, $operation);
+                $this->set($key, $value);
             }
         }
 

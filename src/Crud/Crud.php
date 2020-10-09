@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
 use Tessa\Admin\Crud\Traits\Columns;
+use Tessa\Admin\Crud\Traits\Create;
 use Tessa\Admin\Crud\Traits\Fields;
 use Tessa\Admin\Crud\Traits\Query;
 use Tessa\Admin\Crud\Traits\Setting;
 
 class Crud
 {
-    use Setting, Query, Columns, Fields;
+    use Setting, Query, Columns, Fields, Create;
     use Macroable;
 
     /** @var Model */
@@ -23,6 +24,7 @@ class Crud
     /** @var string ['list', 'create', 'update', 'show', 'delete'] */
     protected $operation;
 
+    //TODO: sửa lại route, chắc là lưu route name - Ex: admin.user;
     protected $route;
     public $entity_name = 'entry';
     public $entity_name_plural = 'entries';

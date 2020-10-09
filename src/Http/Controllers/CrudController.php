@@ -4,12 +4,16 @@
 namespace Tessa\Admin\Http\Controllers;
 
 
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Tessa\Admin\Crud\Crud;
 
 class CrudController extends Controller
 {
+    use DispatchesJobs, ValidatesRequests;
+
     /** @var Crud */
     public $crud;
 

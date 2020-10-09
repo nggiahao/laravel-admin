@@ -19,20 +19,20 @@ trait Fields
     /**
      * Add a field at the end of to the CRUD object's "fields" array.
      *
-     * @param array|string $column
+     * @param array|string $field
      *
      * @return self
      */
-    public function addField($column)
+    public function addField($field)
     {
-        $this->addFieldToSettings($column);
+        $this->addFieldToSettings($field);
 
         return $this;
     }
 
-    public function addFieldToSettings($column) {
-        $columns = array_merge($this->columns(), [$column]);
+    public function addFieldToSettings($field) {
+        $fields = array_merge($this->fields(), [$field]);
 
-        $this->set('fields', $columns);
+        $this->set('fields', $fields);
     }
 }

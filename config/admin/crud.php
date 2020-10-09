@@ -11,7 +11,7 @@ return [
 
     'operations' => [
         'list' => [
-            'contentClass' => 'col-12',
+            'contentClass' => 'w-full',
 
             'responsiveTable' => true,
 
@@ -28,6 +28,25 @@ return [
             'actionsColumnPriority' => 1,
 
             'resetButton' => false,
+        ],
+
+        'create' => [
+            'contentClass' => 'w-full',
+
+            'tabsType' => 'horizontal', //options: horizontal, vertical
+
+            'groupedErrors' => true,
+            'inlineErrors'  => true,
+
+            'autoFocusOnFirstField' => true,
+
+            'defaultSaveAction' => 'save_and_back',
+
+            'showSaveActionChange' => true, //options: true, false
+
+            'showCancelButton' => true,
+
+            'saveAllInputsExcept' => false,
         ],
     ]
 ];

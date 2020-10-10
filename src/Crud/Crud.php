@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
 use Tessa\Admin\Crud\Traits\Columns;
 use Tessa\Admin\Crud\Traits\Create;
+use Tessa\Admin\Crud\Traits\Delete;
 use Tessa\Admin\Crud\Traits\Fields;
 use Tessa\Admin\Crud\Traits\Query;
 use Tessa\Admin\Crud\Traits\Setting;
@@ -16,7 +17,7 @@ use Tessa\Admin\Crud\Traits\Update;
 
 class Crud
 {
-    use Setting, Query, Columns, Fields, Create, Update;
+    use Setting, Query, Columns, Fields, Create, Update, Delete;
     use Macroable;
 
     /** @var Model */

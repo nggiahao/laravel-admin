@@ -12,10 +12,11 @@ use Tessa\Admin\Crud\Traits\Create;
 use Tessa\Admin\Crud\Traits\Fields;
 use Tessa\Admin\Crud\Traits\Query;
 use Tessa\Admin\Crud\Traits\Setting;
+use Tessa\Admin\Crud\Traits\Update;
 
 class Crud
 {
-    use Setting, Query, Columns, Fields, Create;
+    use Setting, Query, Columns, Fields, Create, Update;
     use Macroable;
 
     /** @var Model */

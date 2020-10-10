@@ -98,8 +98,20 @@ class AdminServiceProvider extends ServiceProvider
     public function addRouteMacro()
     {
         if (!Route::hasMacro('crud')) {
-            Route::macro('crud', function ($value) {
+            Route::macro('crud', function ($name, $controller) {
+                $route_name = 'admin.'.$name;
 
+                /** @var Router $this */
+                if ($this->hasGroupStack()) {
+                    $group_stack = $this->getGroupStack();
+                    $group_namespace = $group_stack && isset(end($group_stack)['namespace']) ? end($group_stack)['namespace'].'\\' : '';
+                } else {
+                    $group_namespace = '';
+                }
+                $namespace_controller = $group_namespace.$controller;
+                $controller_instance = app($namespace_controller);
+
+                return $controller_instance->setupRoutes($name, $route_name, $controller);
             });
         }
     }

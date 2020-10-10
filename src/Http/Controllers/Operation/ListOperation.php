@@ -5,11 +5,40 @@ namespace Tessa\Admin\Http\Controllers\Operation;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 trait ListOperation
 {
-    
+
+    /**
+     * Define which routes are needed for this operation.
+     *
+     * @param string $segment    Name of the current entity (singular). Used as first URL segment.
+     * @param string $route_name  Prefix of the route name.
+     * @param string $controller Name of the current CrudController.
+     */
+    protected function setupListRoutes($segment, $route_name, $controller)
+    {
+        Route::get($segment.'/', [
+            'as'        => $route_name.'.index',
+            'uses'      => $controller.'@index',
+            'operation' => 'list',
+        ]);
+
+        Route::get($segment.'/search', [
+            'as'        => $route_name.'.search',
+            'uses'      => $controller.'@search',
+            'operation' => 'list',
+        ]);
+
+//        Route::get($segment.'/{id}/details', [
+//            'as'        => $route_name.'.showDetailsRow',
+//            'uses'      => $controller.'@showDetailsRow',
+//            'operation' => 'list',
+//        ]);
+    }
+
     public function index() {
 
         /**

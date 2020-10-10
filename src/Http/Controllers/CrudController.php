@@ -31,6 +31,17 @@ class CrudController extends Controller
         $this->setupConfigurationForCurrentOperation();
     }
 
+    public function setupRoutes($segment, $route_name, $controller)
+    {
+        preg_match_all('/(?<=^|;)(setup([^;]+?)Routes)(;|$)/', implode(';', get_class_methods($this)), $matches);
+
+        if (count($matches[1])) {
+            foreach ($matches[1] as $method) {
+                $this->{$method}($segment, $route_name, $controller);
+            }
+        }
+    }
+
     protected function setupConfigurationForCurrentOperation()
     {
         $operation_name = $this->crud->getOperation();

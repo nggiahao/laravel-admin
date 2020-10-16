@@ -10,12 +10,12 @@ trait Buttons
     }
 
     public function addButton($button) {
-        $button = array_merge($button, [
+        $button = array_merge([
             'stack' => 'top',
             'view' => 'view',
             'content' => 'crud::buttons.show',
             'position' => 'end'
-        ]);
+        ], $button);
         $this->addButtonToSetting($button);
 
         return $this;

@@ -7,7 +7,7 @@
 
     <div class="w-full mb-3">
         @foreach($crud->buttons()->where('stack', 'top') as $button)
-            @include('crud::buttons.show')
+            @include($button['content'])
         @endforeach
     </div>
 

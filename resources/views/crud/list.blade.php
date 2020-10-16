@@ -5,6 +5,12 @@
         <h2 class="text-3xl font-semibold capitalize">{{$crud->entity_name_plural}}</h2>
     </div>
 
+    <div class="w-full mb-3">
+        @foreach($crud->buttons()->where('stack', 'top') as $button)
+            @include('crud::buttons.show')
+        @endforeach
+    </div>
+
     <!-- THE ACTUAL CONTENT -->
     <div class="w-full relative">
         <table id="tessa_table" class="table-auto bg-main border" >

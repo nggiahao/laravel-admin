@@ -58,6 +58,7 @@ trait ListOperation
         $this->data['crud'] = $this->crud;
         $this->data['title'] = Str::ucfirst($this->crud->entity_name_plural);
 
+//        dd($this->crud);
         return view('crud::list', $this->data);
     }
 

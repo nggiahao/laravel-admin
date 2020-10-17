@@ -53,7 +53,6 @@ trait ListOperation
          * 3. Load setup
          */
 
-        $this->init('list');
 
         $this->data['crud'] = $this->crud;
         $this->data['title'] = Str::ucfirst($this->crud->entity_name_plural);
@@ -63,7 +62,6 @@ trait ListOperation
     }
 
     public function search(Request $request) {
-        $this->init('list');
 
         //TODO: apply filter
         //

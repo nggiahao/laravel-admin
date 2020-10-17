@@ -33,7 +33,6 @@ trait UpdateOperation
     }
     public function edit($id) {
 
-        $this->init('update');
 
         $this->data['id'] = $id;
         $this->data['entry'] = $this->crud->getModel()->findOrFail($id);
@@ -44,7 +43,6 @@ trait UpdateOperation
     }
 
     public function update(Request $request, $id) {
-        $this->init('update');
 
         $entry = $this->crud->update($id, $request->all());
 

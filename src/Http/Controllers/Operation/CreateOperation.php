@@ -35,7 +35,6 @@ trait CreateOperation
     
     public function create() {
 
-        $this->init('create');
 
         $this->data['crud'] = $this->crud;
         $this->data['title'] = Str::ucfirst($this->crud->entity_name_plural);
@@ -44,7 +43,6 @@ trait CreateOperation
     }
 
     public function store(Request $request) {
-        $this->init('create');
 
         $entry = $this->crud->create($request->all());
 

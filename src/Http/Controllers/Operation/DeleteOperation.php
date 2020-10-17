@@ -27,7 +27,6 @@ trait DeleteOperation
     }
     
     public function delete($id) {
-        $this->init('delete');
 
         if ($this->crud->delete($id)) {
             return response()->json(['message' => 'OK'], 200);

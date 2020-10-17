@@ -19,16 +19,24 @@ class CrudController extends Controller
 
     public $data;
 
-    public function setup() {
-        //
+    public function __construct() {
+        $this->middleware(function ($request, $next) {
+            $operation = \Route::getCurrentRoute()->action['operation'];
+
+            $this->crud = app('crud')->setOperation($operation);
+            $this->crud->loadDefaultOperationSettingsFromConfig();
+
+            $this->setupDefault();
+            $this->setup();
+            $this->setupConfigurationForCurrentOperation();
+
+            return $next($request);
+        });
     }
 
-    protected function init($operation) {
-        $this->crud = app('crud')->setOperation($operation);
-        $this->crud->loadDefaultOperationSettingsFromConfig();
 
-        $this->setup();
-        $this->setupConfigurationForCurrentOperation();
+    public function setup() {
+        //
     }
 
     public function setupRoutes($segment, $route_name, $controller)
@@ -39,6 +47,15 @@ class CrudController extends Controller
             foreach ($matches[1] as $method) {
                 $this->{$method}($segment, $route_name, $controller);
             }
+        }
+    }
+
+    public function setupDefault() {
+        $operation_name = $this->crud->getOperation();
+        $setup_class_name = 'setup' . Str::studly($operation_name) . 'Default';
+
+        if (method_exists($this, $setup_class_name)) {
+            $this->{$setup_class_name}();
         }
     }
 

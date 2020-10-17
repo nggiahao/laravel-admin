@@ -39,6 +39,14 @@ trait ListOperation
 //        ]);
     }
 
+    protected function setupListDefault() {
+        //
+    }
+
+    public function setupListOperation() {
+        //
+    }
+
     public function index() {
 
         /**
@@ -99,11 +107,22 @@ trait ListOperation
 
     public function getEntryView($entry) {
         $row = [];
+        $action = null;
 
         foreach ($this->crud->columns() as $column) {
             $column_name = $column['name'];
             $row[] = "<span>". $entry->$column_name ."</span>";
         }
+
+        foreach ($this->crud->buttons()->where('stack', 'line') as $button) {
+            $action .= \View::make($button['content'])
+                            ->with([
+                                'crud' => $this->crud,
+                                'entry' => $entry
+                            ])
+                            ->render();
+        }
+        $row[] = $action;
 
         return $row;
     }

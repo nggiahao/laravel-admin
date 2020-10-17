@@ -25,6 +25,19 @@ trait DeleteOperation
             'operation' => 'delete',
         ]);
     }
+
+    protected function setupDeleteDefault() {
+        $this->crud->addButton([
+            'stack' => 'line',
+            'view' => 'view',
+            'name' => 'delete',
+            'content' => 'crud::buttons.delete',
+        ]);
+    }
+
+    public function setupDeleteOperation() {
+        //
+    }
     
     public function delete($id) {
 

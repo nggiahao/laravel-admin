@@ -19,6 +19,7 @@
                 @foreach($crud->columns() as $column)
                     <th>{!! $column['label'] !!}</th>
                 @endforeach
+                    <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                 @foreach($crud->columns() as $column)
                     <th>{!! $column['label'] !!}</th>
                 @endforeach
+                <th>Action</th>
             </tr>
             </tfoot>
         </table>

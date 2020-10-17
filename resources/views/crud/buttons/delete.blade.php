@@ -1,2 +1,2 @@
-<a href="{{ url($crud->getRoute().'/delete') }}" class="btn btn-primary bg-gradient-primary">
+<a href="{{ url($crud->getRoute().'/delete/'.$entry->id) }}" class="text-primary">
     Delete</a>

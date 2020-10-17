@@ -31,6 +31,20 @@ trait UpdateOperation
             'operation' => 'update',
         ]);
     }
+
+    protected function setupUpdateDefault() {
+        $this->crud->addButton([
+            'stack' => 'line',
+            'view' => 'view',
+            'name' => 'update',
+            'content' => 'crud::buttons.update',
+        ]);
+    }
+
+    public function setupUpdateOperation() {
+        $this->setupCreateOperation();
+    }
+
     public function edit($id) {
 
 

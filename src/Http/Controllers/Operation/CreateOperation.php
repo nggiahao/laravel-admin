@@ -32,6 +32,20 @@ trait CreateOperation
             'operation' => 'create',
         ]);
     }
+
+    protected function setupCreateDefault() {
+
+        $this->crud->addButton([
+            'stack' => 'top',
+            'view' => 'view',
+            'name' => 'create',
+            'content' => 'crud::buttons.create',
+        ]);
+    }
+
+    public function setupCreateOperation() {
+        //
+    }
     
     public function create() {
 

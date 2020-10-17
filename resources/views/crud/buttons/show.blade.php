@@ -1,2 +1,2 @@
-<a href="{{ url($crud->getRoute().'/show') }}" class="btn btn-primary bg-gradient-primary">
+<a href="{{ url($crud->getRoute().'/show/'.$entry->id) }}" class="text-primary">
     Show</a>

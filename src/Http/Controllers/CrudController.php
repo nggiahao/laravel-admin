@@ -24,7 +24,6 @@ class CrudController extends Controller
             $operation = \Route::getCurrentRoute()->action['operation'];
 
             $this->crud = app('crud')->setOperation($operation);
-            $this->crud->loadDefaultOperationSettingsFromConfig();
 
             $this->setupDefault();
             $this->setup();
@@ -51,11 +50,14 @@ class CrudController extends Controller
     }
 
     public function setupDefault() {
-        $operation_name = $this->crud->getOperation();
-        $setup_class_name = 'setup' . Str::studly($operation_name) . 'Default';
+        $this->crud->loadDefaultOperationSettingsFromConfig();
 
-        if (method_exists($this, $setup_class_name)) {
-            $this->{$setup_class_name}();
+        preg_match_all('/(?<=^|;)(setup([^;]+?)Default)(;|$)/', implode(';', get_class_methods($this)), $matches);
+
+        if (count($matches[1])) {
+            foreach ($matches[1] as $method) {
+                $this->{$method}();
+            }
         }
     }
 

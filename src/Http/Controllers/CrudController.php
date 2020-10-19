@@ -50,7 +50,6 @@ class CrudController extends Controller
     }
 
     public function setupDefault() {
-        $this->crud->loadDefaultOperationSettingsFromConfig();
 
         preg_match_all('/(?<=^|;)(setup([^;]+?)Default)(;|$)/', implode(';', get_class_methods($this)), $matches);
 
@@ -59,6 +58,7 @@ class CrudController extends Controller
                 $this->{$method}();
             }
         }
+        $this->crud->loadDefaultOperationSettingsFromConfig();
     }
 
     protected function setupConfigurationForCurrentOperation()

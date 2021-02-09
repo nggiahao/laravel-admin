@@ -7,6 +7,7 @@ namespace Tessa\Admin\Http\Controllers\Operation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Tessa\Admin\Crud\CrudPanel;
 
 trait ListOperation
 {
@@ -18,7 +19,7 @@ trait ListOperation
      * @param string $route_name  Prefix of the route name.
      * @param string $controller Name of the current CrudController.
      */
-    protected function setupListRoutes($segment, $route_name, $controller)
+    protected static function setupListRoutes($segment, $route_name, $controller)
     {
         Route::get($segment.'/', [
             'as'        => $route_name.'.index',
@@ -40,7 +41,7 @@ trait ListOperation
     }
 
     protected function setupListDefault() {
-        //
+        $this->crud->allowAccess('list');
     }
 
     public function setupListOperation() {
@@ -65,7 +66,7 @@ trait ListOperation
         $this->data['crud'] = $this->crud;
         $this->data['title'] = Str::ucfirst($this->crud->entity_name_plural);
 
-//        dd($this->crud);
+        dd($this->crud);
         return view('crud::list', $this->data);
     }
 

@@ -4,9 +4,9 @@
 namespace Tessa\Admin\Crud;
 
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
+use Tessa\Admin\Crud\Traits\Access;
 use Tessa\Admin\Crud\Traits\Buttons;
 use Tessa\Admin\Crud\Traits\Columns;
 use Tessa\Admin\Crud\Traits\Create;
@@ -18,17 +18,17 @@ use Tessa\Admin\Crud\Traits\Update;
 
 class CrudPanel
 {
-    use Setting, Query, Columns, Fields, Create, Update, Delete, Buttons;
+    use Setting, Access, Query, Columns, Fields, Create, Update, Delete, Buttons;
     use Macroable;
 
-    /** @var Model */
-    public $model;
+    public $model = "\App\Models\Entity";
 
     /** @var string ['list', 'create', 'update', 'show', 'delete'] */
     protected $operation;
 
     //TODO: sửa lại route, chắc là lưu route name - Ex: admin.user;
     protected $route;
+    
     public $entity_name = 'entry';
     public $entity_name_plural = 'entries';
 
@@ -75,14 +75,18 @@ class CrudPanel
     /**
      * @param string $model
      *
-     * @return Crud
+     * @return CrudPanel
      * @throws \Exception
      */
-    public function setModel(string $model): Crud
+    public function setModel(string $model): CrudPanel
     {
         if (! class_exists($model)) {
             throw new \Exception('The model does not exist.', 500);
         }
+    
+//        if (! method_exists($model, 'hasCrudTrait')) {
+//            throw new \Exception('Please use CrudTrait on the model.', 500);
+//        }
 
         $this->model = new $model();
         $this->setQuery($this->model->newQuery());
@@ -102,9 +106,9 @@ class CrudPanel
     /**
      * @param string $route route name
      *
-     * @return Crud
+     * @return CrudPanel
      */
-    public function setRoute(string $route): Crud
+    public function setRoute(string $route): CrudPanel
     {
         $this->route = $route;
 
@@ -118,14 +122,14 @@ class CrudPanel
     {
         return $this->route;
     }
-
+    
     /**
      *
      * @param Request|null $request
      *
-     * @return Crud
+     * @return CrudPanel
      */
-    public function setRequest(Request $request = null): Crud
+    public function setRequest(Request $request = null): CrudPanel
     {
         $this->request = $request ?? \Request::instance();
 

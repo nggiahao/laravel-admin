@@ -31,7 +31,7 @@ if (! function_exists('admin_view')) {
      */
     function admin_view($view)
     {
-        $theme = 'tessa_admin::';
+        $theme = 'admin::';
 
         return $theme.$view;
     }

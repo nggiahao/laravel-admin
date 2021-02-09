@@ -18,7 +18,7 @@ trait ShowOperation
      * @param string $route_name  Prefix of the route name.
      * @param string $controller Name of the current CrudController.
      */
-    protected function setupShowRoutes($segment, $route_name, $controller)
+    protected static function setupShowRoutes($segment, $route_name, $controller)
     {
         Route::get($segment.'/show/{id}', [
             'as'        => $route_name.'.show',
@@ -28,6 +28,8 @@ trait ShowOperation
     }
 
     protected function setupShowDefault() {
+        $this->crud->allowAccess('show');
+    
         $this->crud->addButton([
             'stack' => 'line',
             'view' => 'view',

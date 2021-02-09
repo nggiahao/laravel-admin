@@ -18,7 +18,7 @@ trait CreateOperation
      * @param string $route_name  Prefix of the route name.
      * @param string $controller Name of the current CrudController.
      */
-    protected function setupCreateRoutes($segment, $route_name, $controller)
+    protected static function setupCreateRoutes($segment, $route_name, $controller)
     {
         Route::get($segment.'/create', [
             'as'        => $route_name.'.create',
@@ -34,6 +34,7 @@ trait CreateOperation
     }
 
     protected function setupCreateDefault() {
+        $this->crud->allowAccess('create');
 
         $this->crud->addButton([
             'stack' => 'top',

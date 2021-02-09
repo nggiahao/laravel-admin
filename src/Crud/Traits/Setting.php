@@ -38,7 +38,7 @@ trait Setting
         $config_operation = config("admin.crud.operations.$operation", null);
         if (is_array($config_operation) && count($config_operation)) {
             foreach ($config_operation as $key => $value) {
-                $this->set($key, $value);
+                $this->set('configuration.'.$key, $value);
             }
         }
 

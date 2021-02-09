@@ -8,18 +8,23 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use Tessa\Admin\Crud\Crud;
+use Tessa\Admin\Crud\CrudPanel;
 
 class CrudController extends Controller
 {
     use DispatchesJobs, ValidatesRequests;
 
-    /** @var Crud */
+    /** @var CrudPanel */
     public $crud;
 
     public $data;
 
     public function __construct() {
+        
+        if ($this->crud) {
+            return;
+        }
+        
         $this->middleware(function ($request, $next) {
             $operation = \Route::getCurrentRoute()->action['operation'];
 
@@ -27,7 +32,6 @@ class CrudController extends Controller
 
             $this->setupDefault();
             $this->setup();
-            $this->setupConfigurationForCurrentOperation();
 
             return $next($request);
         });
@@ -35,7 +39,8 @@ class CrudController extends Controller
 
 
     public function setup() {
-        //
+        $this->crud->loadDefaultOperationSettingsFromConfig();
+        $this->setupConfigurationForCurrentOperation();
     }
 
     public function setupDefault() {
@@ -47,7 +52,6 @@ class CrudController extends Controller
                 $this->{$method}();
             }
         }
-        $this->crud->loadDefaultOperationSettingsFromConfig();
     }
 
     protected function setupConfigurationForCurrentOperation()

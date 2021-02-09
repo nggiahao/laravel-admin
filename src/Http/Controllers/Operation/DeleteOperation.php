@@ -17,7 +17,7 @@ trait DeleteOperation
      * @param string $route_name  Prefix of the route name.
      * @param string $controller Name of the current CrudController.
      */
-    protected function setupDeleteRoutes($segment, $route_name, $controller)
+    protected static function setupDeleteRoutes($segment, $route_name, $controller)
     {
         Route::post($segment.'/delete', [
             'as'        => $route_name.'.delete',
@@ -27,6 +27,8 @@ trait DeleteOperation
     }
 
     protected function setupDeleteDefault() {
+        $this->crud->allowAccess('delete');
+    
         $this->crud->addButton([
             'stack' => 'line',
             'view' => 'view',

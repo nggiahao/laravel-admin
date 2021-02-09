@@ -17,7 +17,7 @@ trait UpdateOperation
      * @param string $route_name  Prefix of the route name.
      * @param string $controller Name of the current CrudController.
      */
-    protected function setupUpdateRoutes($segment, $route_name, $controller)
+    protected static function setupUpdateRoutes($segment, $route_name, $controller)
     {
         Route::get($segment.'/edit/{id}', [
             'as'        => $route_name.'.edit',
@@ -33,6 +33,8 @@ trait UpdateOperation
     }
 
     protected function setupUpdateDefault() {
+        $this->crud->allowAccess('update');
+    
         $this->crud->addButton([
             'stack' => 'line',
             'view' => 'view',

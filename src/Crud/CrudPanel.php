@@ -16,7 +16,7 @@ use Tessa\Admin\Crud\Traits\Query;
 use Tessa\Admin\Crud\Traits\Setting;
 use Tessa\Admin\Crud\Traits\Update;
 
-class Crud
+class CrudPanel
 {
     use Setting, Query, Columns, Fields, Create, Update, Delete, Buttons;
     use Macroable;

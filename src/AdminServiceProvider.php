@@ -2,10 +2,12 @@
 
 namespace Tessa\Admin;
 
+use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Tessa\Admin\Crud\Crud;
+use Tessa\Admin\Crud\CrudPanel;
+use Tessa\Admin\Http\Controllers\CrudController;
 use Tessa\Admin\Http\Middleware\Authenticate;
 
 class AdminServiceProvider extends ServiceProvider
@@ -21,6 +23,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+//        $this->loadTranslationsFrom();
         $this->loadConfigs();
         $this->pushMiddleware();
         $this->setupRoutes();
@@ -33,7 +36,7 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('crud', function () {
-            return new Crud();
+            return new CrudPanel();
         });
 
         $this->addRouteMacro();
@@ -76,6 +79,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $router = $this->app->make(Router::class);
         $router->pushMiddlewareToGroup('auth.admin', Authenticate::class);
+        $router->pushMiddlewareToGroup('auth.admin', ConvertEmptyStringsToNull::class);
     }
 
     /**
@@ -109,9 +113,8 @@ class AdminServiceProvider extends ServiceProvider
                     $group_namespace = '';
                 }
                 $namespace_controller = $group_namespace.$controller;
-                $controller_instance = app($namespace_controller);
 
-                return $controller_instance->setupRoutes($name, $route_name, $controller);
+                return $namespace_controller::setupRoutes($name, $route_name, $controller);
             });
         }
     }
@@ -121,15 +124,18 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function publishFiles()
     {
-        $tessa_config = [__DIR__.'/../config' => config_path()];
+//        $error_views = [__DIR__.'/resources/error_views' => resource_path('views/errors')];
+        $config = [__DIR__.'/../config' => config_path()];
+        $public = [__DIR__.'/../public' => public_path()];
+//        $lang_files = [__DIR__.'/resources/lang' => resource_path('lang/vendor')];
+        $route = [__DIR__.$this->custom_route_file_path => base_path('/routes/admin/custom.php')];
 
-        $tessa_public = [__DIR__.'/../public' => public_path()];
-
-        $tessa_route = [__DIR__.$this->custom_route_file_path => base_path('/routes/admin/custom.php')];
-
-        $this->publishes($tessa_config, 'config');
-        $this->publishes($tessa_route, 'route');
-        $this->publishes($tessa_public, 'public');
+        $this->publishes($config, 'config');
+        $this->publishes($route, 'route');
+        $this->publishes($public, 'public');
+//        $this->publishes($error_views, 'errors');
+//        $this->publishes($lang_files, 'lang');
+    
     }
 
     public function loadViews() {
@@ -138,13 +144,14 @@ class AdminServiceProvider extends ServiceProvider
 
         // - first the published/overwritten views (in case they have any changes)
         if (file_exists($custom_base_folder)) {
-            $this->loadViewsFrom($custom_base_folder, config('admin.base.namespace_view', 'tessa_admin'));
+            $this->loadViewsFrom($custom_base_folder, config('admin.base.namespace_view', 'admin'));
         }
         if (file_exists($custom_crud_folder)) {
             $this->loadViewsFrom($custom_crud_folder, 'crud');
         }
-
-        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/base'), config('admin.base.namespace_view', 'tessa_admin'));
+    
+        // - then the stock views that come with the package, in case a published view might be missing
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/base'), config('admin.base.namespace_view', 'admin'));
         $this->loadViewsFrom(realpath(__DIR__.'/../resources/views/crud'), 'crud');
     }
 

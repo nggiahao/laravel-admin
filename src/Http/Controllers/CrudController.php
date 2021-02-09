@@ -38,17 +38,6 @@ class CrudController extends Controller
         //
     }
 
-    public function setupRoutes($segment, $route_name, $controller)
-    {
-        preg_match_all('/(?<=^|;)(setup([^;]+?)Routes)(;|$)/', implode(';', get_class_methods($this)), $matches);
-
-        if (count($matches[1])) {
-            foreach ($matches[1] as $method) {
-                $this->{$method}($segment, $route_name, $controller);
-            }
-        }
-    }
-
     public function setupDefault() {
 
         preg_match_all('/(?<=^|;)(setup([^;]+?)Default)(;|$)/', implode(';', get_class_methods($this)), $matches);
@@ -70,5 +59,16 @@ class CrudController extends Controller
             $this->{$setup_class_name}();
         }
 
+    }
+    
+    public static function setupRoutes($segment, $route_name, $controller)
+    {
+        preg_match_all('/(?<=^|;)(setup([^;]+?)Routes)(;|$)/', implode(';', get_class_methods(static::class)), $matches);
+        
+        if (count($matches[1])) {
+            foreach ($matches[1] as $method) {
+                static::{$method}($segment, $route_name, $controller);
+            }
+        }
     }
 }
